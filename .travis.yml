@@ -3,6 +3,10 @@ sudo: required
 services:
   - docker
 
+branches:
+  only:
+  - build-with-travis
+  
 before_install:
 - docker build --rm -t ddennedy/shotcut-build shotcut-build
 - mkdir work; cd work
