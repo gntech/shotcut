@@ -20,5 +20,10 @@ before_install:
 
 script:
 - docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build
-- docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build -o Win32
-- docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build -o Win64
+
+deploy:
+  provider: releases
+  api_key: "$GITHUB_TOKEN"
+  file: "$PWD:/root/shotcut/shotcut.tar.bz2"
+  skip_cleanup: true
+
