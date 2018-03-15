@@ -4,12 +4,10 @@ language: cpp
 
 services:
   - docker
-
-branches:
-  only:
-  - build-with-travis
   
 before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -qq tree
 - wget --no-check-certificate https://raw.githubusercontent.com/gntech/mlt-scripts/Travis-build/docker/shotcut-build/Dockerfile
 - mkdir shotcut-build
 - mv Dockerfile shotcut-build/
@@ -21,9 +19,14 @@ before_install:
 script:
 - docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build
 
+after_success:
+- tree .
+
 deploy:
   provider: releases
   api_key: "$GITHUB_TOKEN"
-  file: "$PWD:/root/shotcut/shotcut.tar.bz2"
+  file: "shotcut.tar.bz2"
   skip_cleanup: true
+  on:
+    tags: true
 
