@@ -1,10 +1,15 @@
 sudo: required
-
-language: cpp
+language: generic
+dist: trusty
+addons:
+  apt:
+    packages:
+    - squashfs-tools
+    - desktop-file-utils
 
 services:
   - docker
-  
+
 before_install:
 - wget --no-check-certificate https://raw.githubusercontent.com/gntech/mlt-scripts/Travis-build/docker/shotcut-build/Dockerfile
 - mkdir shotcut-build
@@ -13,11 +18,11 @@ before_install:
 - mkdir work; cd work
 - wget --no-check-certificate https://raw.githubusercontent.com/gntech/shotcut/master/scripts/build-shotcut.sh
 - wget --no-check-certificate https://raw.githubusercontent.com/mltframework/shotcut/master/scripts/shotcut.nsi
-# Build snap and publish
-- wget --no-check-certificate https://raw.githubusercontent.com/gntech/shotcut/master/scripts/build-and-publish-snap.sh
+- git clone --depth=1 https://github.com/AppImage/AppImages
 
 script:
 - docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build
+- bash -ex Appimages/pkg2appimage ../gntech/shotcut/scripts/shotcut-recipe.yml
 
 deploy:
   skip_cleanup: true
@@ -26,7 +31,4 @@ deploy:
     tags: true
 - provider: releases
   api_key: "$GITHUB_TOKEN"
-  file: "shotcut.tar.bz2"
-- provider: script
-  script: build-and-publish-snap.sh
-  # docker run -v $(pwd):$(pwd) -w $(pwd) snapcore/snapcraft sh -c "apt update && snapcraft && snapcraft push *.snap --release edge"
+  file: "out/*.appimage"
