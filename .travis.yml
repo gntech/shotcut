@@ -25,10 +25,11 @@ script:
 - bash -ex Appimages/pkg2appimage ../gntech/shotcut/scripts/shotcut-recipe.yml
 
 deploy:
+  provider: releases
+  api_key: "$GITHUB_TOKEN"
+  file: "out/*.appimage"
   skip_cleanup: true
   on:
     branch: master
     tags: true
-- provider: releases
-  api_key: "$GITHUB_TOKEN"
-  file: "out/*.appimage"
+
