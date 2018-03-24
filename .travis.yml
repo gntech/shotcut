@@ -22,6 +22,10 @@ before_install:
 
 script:
 - docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build
+- ls -la ../
+- ls -la ../../
+- ls -la ../gntech/
+- ls -la ../gntech/shotcut
 - bash -ex AppImages/pkg2appimage ../gntech/shotcut/scripts/shotcut-recipe.yml
 
 deploy:
