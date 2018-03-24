@@ -23,11 +23,14 @@ before_install:
 script:
 - docker run -it --rm -v $PWD:/root/shotcut ddennedy/shotcut-build
 - bash -ex pkg2appimage ../scripts/shotcut-recipe.yml
+- echo $PWD
+- ls -la .
+- ls -la ../
 
 deploy:
   provider: releases
   api_key: "$GITHUB_TOKEN"
-  file: "out/*.appimage"
+  file: "out/*.AppImage"
   skip_cleanup: true
   on:
     branch: master
