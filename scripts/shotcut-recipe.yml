@@ -12,7 +12,7 @@ ingredients:
     - echo "multiarch-support" >> excludedeblist                                                                                         
                                                                                                                                          
 script:
-  - tar xf shotcut*.tar.bz2 -C usr/bin --strip=2
+  - tar xf shotcut.tar.bz2 -C usr/bin --strip=2
   - wget "https://github.com/mltframework/shotcut/raw/master/icons/shotcut-logo-64.png" -O shotcut.png
   - cat > shotcut.desktop <<\EOF
   - [Desktop Entry]
